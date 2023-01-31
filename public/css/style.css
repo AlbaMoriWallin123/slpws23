@@ -1,0 +1,72 @@
+
+
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+
+
+
+/*GRUND*/
+
+#grid_wrapper {
+    display: grid;
+    grid-template-columns: 100%;
+    grid-template-rows: auto 100px auto;
+    grid-template-areas: 
+    "he"
+    "se"
+}
+
+header { 
+    background-color: red;
+    grid-area: he;
+}
+
+section {
+    background-color: yellow;
+    grid-area: se;
+    display: flex;
+    flex-direction: row;
+}
+
+
+
+
+/*LOG IN*/
+
+.log_reg {
+    display: flex;
+    
+}
+
+
+
+
+
+/*FRIENDS*/
+
+.figurbox1 {
+    display: grid;
+    place-content: center;
+    position: relative;
+    height: 300px;
+    width: 200px;
+    margin: 100px;
+    background-color: blue;
+}
+
+.figurbox2 {
+    position: absolute;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    justify-content: space-evenly;
+    top: 100px;
+
+}
+
+
