@@ -36,7 +36,7 @@ post('/new_user') do
     
 
     if (password == password2)
-        #if anvämdar namn inte är unikt
+        #if anvämdar namn inte är unikt, hämta alla med samma användar namn och om tom så finns inte
         password_digest = BCrypt::Password.create(password)
         db = SQLite3::Database.new('db/legofigure.db')
         db.execute("INSERT INTO user (username,pwdigest) VALUES (?,?)",username,password_digest)
@@ -74,3 +74,22 @@ get('/figure') do #ser id:t
     slim(:"show", locals:{figure:result})
 end
 =end
+
+get('/edit_figure') do
+
+
+end
+
+post('/new') do
+    db = SQLite3::Database.new('db/legofigure.db')
+    db.results_as_hash = true
+    result = db.execute("SELECT * FROM partofig")
+    p result
+    @headgear = result["headgear_id"]
+    @head = result["head_id"]
+    @torso = result["torso_id"]
+    @legs = result["legs_id"]
+    @equipment = result["equipment_id"]
+    @mascot = result["mascot_id"]
+    
+end

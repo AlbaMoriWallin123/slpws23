@@ -2,15 +2,15 @@
 
 h1 Vänner
 
-
-- @name.each do |friends|
-    .figurebox1
-        p = friends["username"] 
-    - @parts.each do |delar|
-        .figurebox2
-            p = delar["headgear"]
-            p = delar["head"]
-            p = delar["torso"]
-            p = delar["legs"]
-            p = delar["euqipment"]
-            p = delar["mascot"]
+#friends 
+    - @name.each do |friends|
+        .figurebox1
+            p = friends["username"] 
+        - @parts.each do |delar|
+            .figurebox2
+                p = delar["headgear"]
+                p = delar["head"]
+                p = delar["torso"]
+                p = delar["legs"]
+                p = delar["euqipment"]
+                p = delar["mascot"]

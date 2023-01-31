@@ -8,17 +8,16 @@
 }
 
 
-
-
 /*GRUND*/
 
 #grid_wrapper {
     display: grid;
-    grid-template-columns: 100%;
-    grid-template-rows: auto 100px auto;
+    grid-template-columns: 85% 15%;
+    grid-template-rows: 100px auto;
     grid-template-areas: 
-    "he"
-    "se"
+    "he na"
+    "se se"
+    ;
 }
 
 header { 
@@ -26,11 +25,13 @@ header {
     grid-area: he;
 }
 
+nav {
+    background-color: aqua;
+    grid-area: na;
+}
 section {
     background-color: yellow;
     grid-area: se;
-    display: flex;
-    flex-direction: row;
 }
 
 
@@ -53,10 +54,8 @@ section {
     display: grid;
     place-content: center;
     position: relative;
-    height: 300px;
-    width: 200px;
-    margin: 100px;
     background-color: blue;
+    
 }
 
 .figurbox2 {
@@ -65,8 +64,14 @@ section {
     align-items: center;
     flex-direction: column;
     justify-content: space-evenly;
-    top: 100px;
-
+    background-color: blueviolet;
+    height: 100px;
 }
 
+#friends {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+
+}
 
