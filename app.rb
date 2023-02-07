@@ -76,20 +76,16 @@ end
 =end
 
 get('/edit_figure') do
-
-
-end
-
-post('/new') do
     db = SQLite3::Database.new('db/legofigure.db')
     db.results_as_hash = true
-    result = db.execute("SELECT * FROM partofig")
-    p result
-    @headgear = result["headgear_id"]
-    @head = result["head_id"]
-    @torso = result["torso_id"]
-    @legs = result["legs_id"]
-    @equipment = result["equipment_id"]
-    @mascot = result["mascot_id"]
+    @parts_key = db.execute("SELECT * FROM parts")
+    @parts_id = db.execute("SELECT * FROM parts")
+    puts @parts_id 
+    puts @parts_key
+    slim(:new)
+end
+
+post('/edit') do
+
     
 end

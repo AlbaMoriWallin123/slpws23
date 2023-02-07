@@ -1,8 +1,19 @@
 
+- delar = @parts_key.first.keys()
 
+/puts delar
 
+- i = @parts_id.length
 
-    form action="edit" method="post"
-        - @headgear.each do |headgear|
-        input class="part" type="radion" placeholder="majs" name="chosen_headgear" value="#{}"/
-  <label for="html">HTML</label><br>
+- while i >= 0
+
+    form action="edit" method="post" 
+        - while @parts_id.length >= 0
+            fieldset 
+                input class="part" type="radio" name="select_del" value="delar_i"/
+                label class="part_label" for="select_del" delar(i)_i
+
+    - i = i - 1  #genväg funkar inte
+end
+
+    
