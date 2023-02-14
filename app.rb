@@ -3,12 +3,17 @@ require 'slim'
 require 'sinatra/reloader'
 require 'sqlite3'
 require 'bcrypt'
+require_relative './model.rb'
+
+
+
 
 
 enable :sessions
+
+
 get('/register') do
     slim(:register)
-
 end
 
 
@@ -22,13 +27,10 @@ get('/friends') do
     @name = db.execute("SELECT username FROM user")
     p @name
     @parts = db.execute("SELECT * FROM partofig")  
-    p @parts 
     slim(:index)
 end
 
 
-
-=begin
 post('/new_user') do
     username = params[:username]
     password = params[:password]
@@ -36,15 +38,27 @@ post('/new_user') do
     
 
     if (password == password2)
-        #if anvämdar namn inte är unikt, hämta alla med samma användar namn och om tom så finns inte
+        db = SQLite3::Database.new('db/legofigure.db')
+        db.results_as_hash = true
+        username_db = db.execute("SELECT username FROM user") 
+        
+        username_db.each do |username_db|
+            if username == username_db['username']
+                session[:error] = "Användarnamnet är upptaget, välj ett annat"
+                redirect('/register')
+            end
+        end
+
         password_digest = BCrypt::Password.create(password)
         db = SQLite3::Database.new('db/legofigure.db')
         db.execute("INSERT INTO user (username,pwdigest) VALUES (?,?)",username,password_digest)
-        redirect('/register')
+        session[:error] = "Logga in med ditt nya konto"
+        redirect('/')
+    
     else
-        "Lösenorden matchar inte"
+        session[:error] = "Lösenorden matchar inte"
+        redirect('/register')
     end
-
 end
 
 post('/login') do
@@ -60,32 +74,39 @@ post('/login') do
     if BCrypt::Password.new(pwdigest) == password
         session[:id] = id
         redirect('/figure')
+
     else
-        "fel"
+        session[:error] = "Fel lösenord eller användar namn"
+        redirect('/')
     end
 end
+
+
 
 get('/figure') do #ser id:t
     id = session[:id].to_i
     db = SQLite3::Database.new('db/legofigure.db')
     db.results_as_hash = true
-    result = db.execute("SELECT * FROM partofig WHERE user_id = ?", id)
-    p "herghgrjhgrhioefjiiho#{result}"
-    slim(:"show", locals:{figure:result})
+    @result = db.execute("SELECT * FROM partofig WHERE user_id = ?", id)
+    p "herghgrjhgrhioefjiiho#{@result}"
+    slim(:show)
 end
-=end
 
 get('/edit_figure') do
     db = SQLite3::Database.new('db/legofigure.db')
     db.results_as_hash = true
-    @parts_key = db.execute("SELECT * FROM parts")
-    @parts_id = db.execute("SELECT * FROM parts")
-    puts @parts_id 
-    puts @parts_key
-    slim(:new)
+    @parts_all = db.execute("SELECT * FROM parts")
+    slim(:edit)
 end
 
 post('/edit') do
 
-    
+    headgear = params[:select_headgear]
+    head = params[:select_head]
+    torso = params[:select_torso]
+    legs = params[:select_legs]
+    equipment = params[:select_equipment]
+
+    #db = SQLite3::Database.new('db/legofigure.db')
+    #db.execute("INSERT INTO partofig (headgear,pwdigest) VALUES (?,?)",username,password_digest)
 end

@@ -1,0 +1,24 @@
+
+- delar = @parts_all.first.keys()
+- delar_id = @parts_all[0].values
+
+- p @parts_all
+
+
+form#edit_form action="edit" method="post" 
+    - i = delar.length - 1
+    
+    - while i >= 0
+        - amount = delar_id[i]
+        fieldset.edit_box
+
+            - while amount >= 1
+                input.edit_button class="part" type="radio" name="select_#{delar[i]}" value="#{delar[i]}_#{i}"/
+                label.edit_img class="part_label" for="select_#{delar[i]}" #{delar[i]}_#{i}
+                - amount = amount - 1
+            end 
+
+        - i = i - 1  #genväg funkar inte
+    end
+
+    

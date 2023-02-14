@@ -13,7 +13,7 @@
 #grid_wrapper {
     display: grid;
     grid-template-columns: 85% 15%;
-    grid-template-rows: 100px auto;
+    grid-template-rows: 100px minmax(477px, auto);
     grid-template-areas: 
     "he na"
     "se se"
@@ -32,11 +32,20 @@ nav {
 section {
     background-color: yellow;
     grid-area: se;
+    display: grid;
+    place-content: center;
 }
 
 
 
 
+/*TEXT*/
+
+h1 {
+    font-size: 20px;
+    font-weight: bolder;
+    place-self: center;
+}
 /*LOG IN*/
 
 .log_reg {
@@ -47,31 +56,85 @@ section {
 
 
 
+/*REGISTER*/
+
+.reg_box {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+    width: 300px;
+    height: 250px;
+}
+
+.error_message {
+    place-self: center;
+}
+
+
+
 
 /*FRIENDS*/
 
-.figurbox1 {
-    display: grid;
-    place-content: center;
+.figurebox1 {
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
     position: relative;
-    background-color: blue;
+    background-color: rgb(112, 240, 20);
+    height: 370px;
+    width: 250px;
+    margin: 30px;
     
 }
 
-.figurbox2 {
+.figurebox2 {
     position: absolute;
     display: flex;
     align-items: center;
     flex-direction: column;
     justify-content: space-evenly;
-    background-color: blueviolet;
-    height: 100px;
+    background-color: rgb(28, 146, 142);
+    top: 30%
 }
 
 #friends {
     display: flex;
     flex-direction: row;
-    justify-content: space-between;
-
+    justify-content: center;
 }
 
+.username {
+    margin: 15px;
+    font-size: 20px;
+    font-weight: bolder;
+}
+
+
+
+
+/*EDIT FIGURE*/
+
+#edit_form {
+
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.edit_button {
+ 
+}
+
+.edit_img {
+    
+}
+
+.edit_box {
+    display: flex;
+    flex-direction: column-reverse;
+    width: 20px;
+    height: 20px;
+    justify-content: space-between;
+
+    
+}
