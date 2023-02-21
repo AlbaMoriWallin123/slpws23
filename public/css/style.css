@@ -12,7 +12,7 @@
 
 #grid_wrapper {
     display: grid;
-    grid-template-columns: 85% 15%;
+    grid-template-columns: 80% 20%;
     grid-template-rows: 100px minmax(477px, auto);
     grid-template-areas: 
     "he na"
@@ -28,6 +28,10 @@ header {
 nav {
     background-color: aqua;
     grid-area: na;
+    display: flex;
+    justify-content: space-evenly;
+    align-content: center;
+    flex-wrap: wrap;
 }
 section {
     background-color: yellow;
@@ -39,13 +43,23 @@ section {
 
 
 
-/*TEXT*/
+/*TEXT, NAV*/
 
 h1 {
     font-size: 20px;
     font-weight: bolder;
     place-self: center;
 }
+
+.mknapp {
+    height: 40px;
+    width: 40px;
+
+}
+
+
+
+
 /*LOG IN*/
 
 .log_reg {
@@ -53,6 +67,13 @@ h1 {
     
 }
 
+#harinte {
+    place-self: center;
+    width: 130px;
+    height: 35px;
+    background-color: royalblue;
+    color: black;
+}
 
 
 
@@ -102,6 +123,7 @@ h1 {
     display: flex;
     flex-direction: row;
     justify-content: center;
+    flex-wrap: wrap;
 }
 
 .username {
@@ -113,7 +135,7 @@ h1 {
 
 
 
-/*EDIT FIGURE*/
+/*EDIT FIGURE
 
 #edit_form {
 

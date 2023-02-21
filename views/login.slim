@@ -1,11 +1,14 @@
 
 
+h1 Logga in!!!
 
 form.reg_box action="login" method="POST" class="log_reg"
     input.reg type="text" name="username" placeholder="Användarnamn"/
     input.reg type="password" name="password" placeholder="Lösenord"/
     input.reg type="submit" value="Logga in"/  
 
+a#harinte href="/register" Jag har inget konto
+
 p.error_message #{session[:error]}
 
-session[:error] = ""
+- session[:error] = ""
