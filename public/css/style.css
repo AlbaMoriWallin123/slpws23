@@ -52,9 +52,7 @@ h1 {
 }
 
 .mknapp {
-    height: 40px;
-    width: 40px;
-
+    height: 75px;
 }
 
 
@@ -135,28 +133,31 @@ h1 {
 
 
 
-/*EDIT FIGURE
+/*EDIT FIGURE*/
 
 #edit_form {
-
     display: flex;
-    flex-wrap: wrap;
+    flex-direction: column;
+    justify-content: space-between;
+    margin: 10px;
 }
 
+.edit_box {
+    display: flex;
+    flex-direction: row;
+    margin: 10px;
+}
+
+.edit_partbox {
+    display: flex;
+    flex-direction: column-reverse;
+    margin: 10px;
+    
+}
 .edit_button {
  
 }
 
 .edit_img {
-    
-}
-
-.edit_box {
-    display: flex;
-    flex-direction: column-reverse;
-    width: 20px;
-    height: 20px;
-    justify-content: space-between;
-
     
 }

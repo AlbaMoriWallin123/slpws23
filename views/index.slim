@@ -2,15 +2,13 @@
         
 h1 Vänner
 
-- i = 0
 
 #friends 
     - @parts.each do |delar|
     
         .figurebox1
-            p.username = @name[i]['username']
-            - p i
-            - i = i + 1 #genväg funkar inte här heller
+            p.username = @parts['username']
+
             .figurebox2
                 p = delar['headgear_id']
                 p = delar['head_id']

@@ -1,25 +1,21 @@
 
-- delar = @parts_all.first.keys()
-- delar_id = @parts_all[0].values
-
+- type = ["headgear", "head", "torso", "legs", "equipment"]
 
 
 form#edit_form action="edit" method="post" 
-    - i = delar.length - 1
+        
+        - i = 0
+        - while i <= 4
+
+            fieldset.edit_box
+
+                - @parts[i].each do |del|
+                    
+                    .edit_partbox
+                        input.edit_button type="radio" name="select_#{type[i]}" value="#{del['part_id']}"/
+                        label.edit_img for="select_#{type[i]}" #{del['part_id']}
+
+            - i += 1  
     
-    - while i >= 0
-        - p i
-        - id = delar_id[i]
-        fieldset.edit_box
-
-            - while id >= 1
-                - p id
-                input.edit_button class="part" type="radio" name="select_#{delar[i]}" value="#{delar[i]}_#{id}"/
-                label.edit_img class="part_label" for="select_#{delar[i]}" #{delar[i]}_#{id}
-                - id = id - 1
-            end 
-
-        - i = i - 1  #genväg funkar inte
-    end
 
     

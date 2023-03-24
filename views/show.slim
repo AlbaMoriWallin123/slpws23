@@ -1,15 +1,13 @@
 
 
-
+- p @my_name
 
 h1 Min LEGOgubbe
-
-    .figurebox1
-        p.username = @name
+    
+- hej = @my_name
+.figurebox1
+    p.username = hej['username']
 
         .figurebox2
-            - i = 0
-
-            - while i <= 4
-                p = @mina_delar[i]
-                    
+            /- @my_parts.each do |my_parts|
+            
