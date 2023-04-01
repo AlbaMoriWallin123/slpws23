@@ -8,33 +8,34 @@ require_relative './model.rb'
 
 enable :sessions
 
-
-get('/register') do
-    slim(:register)
+#before do
+    #if session[:id] == nil && (request.path_info != '/')
+     #   session[:error] = "Du måste vara inloggad för att se detta"
+    #end
+get('/user/new') do
+    slim(:'/user/new')
 end
 
-
 get('/') do
+    session[:id] = nil
     slim(:login)
 end
 
-get('/friends') do
-    db = connect_to_db()
-    @parts = ("SELECT username, part1, part2, part3, part4, part5 
-    FROM partofig INNER JOIN user 
-    ON partofig.user_id = user.user_id")
+get('/user/') do
+    @parts = see_friends()
     slim(:index)
 end
 
 
-post('/new_user') do
+post('/user') do
     username = params[:username]
     password = params[:password]
     password2 = params[:password2]
-    
-    session[:error] = register_user(username, password, password2)
+    db = connect_to_db()
+    username_db = db.execute("SELECT username FROM user")
 
-    redirect('/register')
+    session[:error] = register_user(username, password, password2, username_db)
+    redirect('/user')
 end
 
 post('/login') do
@@ -46,25 +47,22 @@ post('/login') do
     pwdigest = result["pwdigest"]
     id = result["id"]
 
-    if BCrypt::Password.new(pwdigest) == password
+    if BCrypt::Password.new(pwdigest) == password #hur redirect till oilika med model
         session[:id] = id
-        redirect('/figure')
-
+        redirect('/figure/:id')
     else
         session[:error] = "Fel lösenord eller användarnamn"
         redirect('/')
     end
 end
 
-get('/figure') do #ser id:t
-    id = 18#session[:id].to_i
-    db = connect_to_db()
-    @my_parts = db.execute("SELECT * FROM partofig WHERE user_id = ?", id) 
-    @my_name = db.execute("SELECT username FROM user WHERE user_id = ?", id)
-    slim(:show)
+get('/figure/:id') do 
+    id = session[:id]
+    @my_parts = join_parts_username(id)
+    slim(:'/figure/show')
 end
 
-get('/edit_figure') do
+get('/figure/:id/edit') do
     db = connect_to_db()
     headgear = db.execute("SELECT part_id FROM parts WHERE type='headgear'")
     head = db.execute("SELECT part_id FROM parts WHERE type='head'")
@@ -79,10 +77,10 @@ get('/edit_figure') do
     @parts << legs
     @parts << equipment
     #p @parts #fixa bättre
-    slim(:edit)
+    slim(:'/figure/edit')
 end
 
-post('/edit') do
+post('/figure/:id/update') do
 
     headgear = params[:select_headgear]
     head = params[:select_head]
@@ -90,17 +88,22 @@ post('/edit') do
     legs = params[:select_legs]
     equipment = params[:select_equipment]
 
-    #db = SQLite3::Database.new('db/legofigure.db')
-    #db.execute("INSERT INTO partofig (headgear,pwdigest) VALUES (?,?)",username,password_digest)
+    db = SQLite3::Database.new('db/legofigure.db')
+    db.execute("INSERT INTO partofig (headgear,pwdigest) VALUES (?,?)",username,password_digest)
 end
 
-get('/logout') do
-    session[:id] = nil
-    flash[:notice] = "Nu är du utloggade"
-    redirect('/')
+get('/user/:id/edit') do
+    slim(:'/user/edit')
 end
- 
-post('/delet_account') do
-    db.execute("DELETE  FROM partofig INNER JOIN user 
-    ON partofig.user_id = user.user_id") inner join
+
+post('/user/:id/delete') do
+    password = params[:password]
+    
+    if BCrypt::Password.new(pwdigest) == password
+        id = session[:id]
+        session[:id] = nil
+        db.execute("DELETE * FROM partofig INNER JOIN user 
+        ON partofig.user_id = user.user_id WHERE user.user_id = ?", id) 
+    end
+    redirect('/')
 end

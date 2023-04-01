@@ -11,7 +11,7 @@ form#edit_form action="edit" method="post"
 
                 - @parts[i].each do |del|
                     
-                    .edit_partbox
+                    form.edit_partbox action="/figure/:id/update" method="post" 
                         input.edit_button type="radio" name="select_#{type[i]}" value="#{del['part_id']}"/
                         label.edit_img for="select_#{type[i]}" #{del['part_id']}
 

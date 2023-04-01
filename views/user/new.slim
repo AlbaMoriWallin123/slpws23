@@ -2,7 +2,7 @@
 
 h1 Skapa konto!!!
 
-form.reg_box action="new_user" method="POST" 
+form.reg_box action="/user" method="POST" 
     input.reg type="text" name="username" placeholder="Användarnamn"/
     input.reg type="password" name="password" placeholder="Lösenord"/
     input.reg type="password" name="password2" placeholder="Skriv in lösenordet igen"/
@@ -10,6 +10,6 @@ form.reg_box action="new_user" method="POST"
 
 p.error_message #{session[:error]}
 
-a.harinte href="/login" Jag nu ett konto, logga in
+a.harinte href="/" Jag har nu ett konto, logga in
 
 - session[:error] = ""
