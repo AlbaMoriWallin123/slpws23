@@ -19,11 +19,13 @@ html lang="en"
                 a href="/user/" 
                     img.mknapp src="/img/friends.jpg" alt="min figur"/
                 
-                a href="/" 
+                a href="/user/:id/edit" 
                     img.mknapp src="/img/edit.jpg" alt="redigera konto"/
 
             section 
-                
+
+                /- if flash[:notice]
+                /p.notice = flash[:notice]
                 ==yield 
 
         script scr="js/main.js"

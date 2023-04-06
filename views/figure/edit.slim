@@ -1,21 +1,33 @@
 
-- type = ["headgear", "head", "torso", "legs", "equipment"]
 
+#edit_wraper
 
-form#edit_form action="edit" method="post" 
-        
+    form#edit_form action="/figure/:id/update" method="post" 
+            
         - i = 0
         - while i <= 4
 
             fieldset.edit_box
-
                 - @parts[i].each do |del|
-                    
-                    form.edit_partbox action="/figure/:id/update" method="post" 
-                        input.edit_button type="radio" name="select_#{type[i]}" value="#{del['part_id']}"/
-                        label.edit_img for="select_#{type[i]}" #{del['part_id']}
-
+                    .edit_partbox 
+                        input.edit_button type="radio" name="select_#{@type[i]}" value="#{del['part_id']}"/
+                        label.edit_img for="select_#{@type[i]}" 
+                            img#delar_lika src="/img/del#{del['part_id']}.png" alt="del#{del['part_id']}"/
             - i += 1  
+        input.harinte type="submit" value="Klar"/
+
+    .figurebox1#plats
+        p.username = @my_parts[0]
+
+        - i = 1
+
+        .figurebox2
+            - while i <= 5
+                img.delar class="#{@type[i - 1]}" src="/img/del#{@my_parts[i]}.png" alt="del#{@my_parts[i]}"/
+                - i += 1
+
+        
     
+
 
     

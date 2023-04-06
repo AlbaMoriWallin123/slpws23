@@ -1,10 +1,12 @@
 
 
-h1 ghjekdfvjn 
+h1 Inställningar 
 
-a.reg href="/" Logga ut 
+a#logut href="/" Logga ut 
 
 
-form action="/delet_account" method="post" 
+form.reg_box action="/user/:id/delete" method="post" 
     input.reg type="password" name="password" placeholder="Skriv först in ditt lösenord"/
     input.reg type="submit" value="Ta bort konto"/
+
+p.error_message #{session[:error]}

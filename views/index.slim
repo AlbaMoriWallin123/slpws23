@@ -7,12 +7,14 @@ h1 Vänner
     - @parts.each do |delar|
     
         .figurebox1
-            p.username = @parts['username']
+            p.username = delar['username']
+
+            - i = 1
 
             .figurebox2
-                p = delar['headgear_id']
-                p = delar['head_id']
-                p = delar['torso_id']
-                p = delar['legs_id']
-                p = delar['equipment_id']
-                p = delar['mascot_id']
+                img.headgear src="/img/del#{delar['part1']}.png" alt=""/
+                img.head src="/img/del#{delar['part2']}.png" alt=""/
+                img.torso src="/img/del#{delar['part3']}.png" alt=""/
+                img.legs src="/img/del#{delar['part4']}.png" alt=""/
+                img.equipment src="/img/del#{delar['part5']}.png" alt=""/
+
