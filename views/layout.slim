@@ -4,28 +4,26 @@ html lang="en"
         meta charset="UTF-8"/
         meta http-equiv="X-UA-Compatible" content="IE=edge"/
         meta name="viewport" content="width=device-width, initial-scale=1.0"/
-        title Din LEGO figur
+        title Din LEGOGUBBE
         link rel="stylesheet" href="/css/style.css"/
     
     body 
         #grid_wrapper
             header 
-                h2 titel
+                h2 Bygg din egen LEGOGUBBE
 
             nav 
-                a href="/figure/:id" 
+                - id = session[:id]
+                a href="/figure/#{id}" 
                     img.mknapp src="/img/du.jpg" alt="vänner"/
 
                 a href="/user/" 
                     img.mknapp src="/img/friends.jpg" alt="min figur"/
                 
-                a href="/user/:id/edit" 
+                a href="/user/#{id}/edit" 
                     img.mknapp src="/img/edit.jpg" alt="redigera konto"/
 
             section 
 
-                /- if flash[:notice]
-                /p.notice = flash[:notice]
                 ==yield 
 
-        script scr="js/main.js"

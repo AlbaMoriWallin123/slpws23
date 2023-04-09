@@ -1,12 +1,38 @@
 
 
-h1 Inställningar 
 
-a#logut href="/" Logga ut 
+.reg_box
+
+    h1 Inställningar 
+
+    a.harinte href="/" Logga ut 
+
+    form.edit_figure action="/user/:id/delete" method="post" 
+        input.reg type="password" name="password" placeholder="Skriv in lösenord först"/
+        input.reg type="submit" value="Radera konto"/
+
+    p.error_message #{session[:error]}
+
+    - session[:error] = ""
 
 
-form.reg_box action="/user/:id/delete" method="post" 
-    input.reg type="password" name="password" placeholder="Skriv först in ditt lösenord"/
-    input.reg type="submit" value="Ta bort konto"/
+- if @check[0]['admin'] == "yes"
+ 
+    form#admin action="/user/:id/update" method="post"
+        - @username_id.each do |namn|
+            fieldset#adminbox
+                p.username = namn['username']
+                - if namn['admin'] == "yes"
+                    p.username = "(admin)"
+                .edit_partbox 
+                    input type="radio" name="update#{namn['user_id']}" value="delete"/
+                    label for="delete_#{namn['user_id']}" Ta bort 
+                .edit_partbox 
+                    input type="radio" name="update#{namn['user_id']}" value="promote"/
+                    label for="delete_#{namn['user_id']}" Befodra
+        input type="submit" value="Updatera"/
 
-p.error_message #{session[:error]}
+    
+
+
+

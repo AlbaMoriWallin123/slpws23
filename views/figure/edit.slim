@@ -10,8 +10,8 @@
             fieldset.edit_box
                 - @parts[i].each do |del|
                     .edit_partbox 
-                        input.edit_button type="radio" name="select_#{@type[i]}" value="#{del['part_id']}"/
-                        label.edit_img for="select_#{@type[i]}" 
+                        input type="radio" name="select_#{@type[i]}" value="#{del['part_id']}"/
+                        label for="select_#{@type[i]}" 
                             img#delar_lika src="/img/del#{del['part_id']}.png" alt="del#{del['part_id']}"/
             - i += 1  
         input.harinte type="submit" value="Klar"/
@@ -25,6 +25,10 @@
             - while i <= 5
                 img.delar class="#{@type[i - 1]}" src="/img/del#{@my_parts[i]}.png" alt="del#{@my_parts[i]}"/
                 - i += 1
+
+    p.error_message #{session[:error]}
+
+- session[:error] = ""
 
         
     

@@ -60,11 +60,6 @@ h1 {
 
 /*LOG IN*/
 
-.log_reg {
-    display: flex;
-    
-}
-
 .harinte {
     place-self: center;
     padding: 10px;
@@ -88,6 +83,10 @@ h1 {
 
 .error_message {
     place-self: center;
+}
+
+.reg_knapp {
+    margin-top: -90px;
 }
 
 
@@ -188,14 +187,6 @@ h1 {
     flex-direction: column-reverse;
 }
 
-.edit_button {
- 
-}
-
-.edit_img {
-    
-}
-
 #delar_lika {
     height: 120px;
 }
@@ -203,11 +194,24 @@ h1 {
 #plats {
     margin-top: 180px;
 }
+
+
 /*EDIT USER*/
 
-#logut {
-    place-content: center;
-    margin: 40px;
+.edit_figure {
+    display: flex;
+    margin-top: 40px;
+    flex-direction: column;    
+}
+
+#admin {
+    display: flex;
+    flex-direction: column-reverse;
+}
+
+#adminbox {
+    display: flex;
+    justify-content: space-evenly;
 }
 
 /*FLASH NOTICE*/
@@ -221,3 +225,7 @@ h1 {
     font-family: Arial, Helvetica, sans-serif;
 }
    
+.error {
+    font-size: 25px;
+    
+}

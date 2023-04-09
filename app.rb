@@ -8,12 +8,19 @@ require_relative './model.rb'
 
 enable :sessions
 
-#before do
-    #if session[:id] == nil && (request.path_info != '/')
-     #   session[:error] = "Du måste vara inloggad för att se detta"
-    #end
+before do
+    if session[:id] == nil && request.path_info != '/' && request.path_info != '/error' && request.path_info != '/login' && request.path_info != '/user/new' && request.path_info != '/user'
+        redirect('/error')
+    end
+end
+
+get('/error') do
+    slim(:error)
+end
+
 
 get('/') do
+    session[:id] = nil
     slim(:login)
 end
 
@@ -22,8 +29,9 @@ get('/user/new') do
 end
 
 get('/user/') do
-    @parts = see_friends()
-    slim(:index)
+    id = session[:id]
+    @parts = see_friends(id)
+    slim(:'/figure/index')
 end
 
 
@@ -33,7 +41,6 @@ post('/user') do
     password2 = params[:password2]
     db = connect_to_db()
     username_db = db.execute("SELECT username FROM user")
-    p username_db 
 
     session[:error] = register_user(username, password, password2, username_db)
     redirect('/user/new')
@@ -56,7 +63,7 @@ post('/login') do
 
     if BCrypt::Password.new(pwdigest) == password #hur redirect till oilika med model
         session[:id] = id
-        redirect('/figure/:id')
+        redirect("/figure/#{id}")
     else
         session[:error] = "Fel lösenord eller användarnamn"
         redirect('/')
@@ -73,15 +80,7 @@ get('/figure/:id/edit') do
 
     id = session[:id]
     @type = ["headgear", "head", "torso", "legs", "equipment"]
-    i = 0
-    @parts = []
-
-    db = connect_to_db()
-    while i <= 4
-        @parts << db.execute("SELECT part_id FROM parts WHERE type = ?", @type[i])
-        i += 1
-    end
-
+    @parts = part_loop(id)
     @my_parts = join_parts_username(id)
     slim(:'/figure/edit')
 end
@@ -93,40 +92,37 @@ post('/figure/:id/update') do
     torso = params[:select_torso]
     legs = params[:select_legs]
     equipment = params[:select_equipment]
+    id = session[:id]
 
-    db = SQLite3::Database.new('db/legofigure.db')
-    db.execute("INSERT INTO partofig (part1, part2, part3, part4, part5) VALUES (?, ?, ?, ?, ?)",headgear,head,torso,legs,equipment)
-    redirect('/figure/:id/edit')
+    session[:error] = update_parts(headgear, head, torso, legs, equipment, id)
+    redirect("/figure/#{id}/edit")
 end
 
 get('/user/:id/edit') do
+
+    id = session[:id]
+
+    db = connect_to_db()
+    @check = admin_check(id, db)
+    @username_id = admin_loop(db)
+
     slim(:'/user/edit')
 end
 
-#get('/logout') do
-    #session[:id] = nil
-    #flash[:notice] = "Nu är du utloggad"
-    #redirect('/')
-#end
+post('/user/:id/update') do
+    id = session[:id]
+    admin_updates()
+    redirect("/user/#{id}/edit")
+end
 
 post('/user/:id/delete') do
 
-    id = session[:id]
-    db = SQLite3::Database.new('db/legofigure.db')
-    pwdigest = db.execute("SELECT pwdigest FROM user WHERE user_id = ?", id)
     password = params[:password]
+    id = session[:id]
 
-    p password
-    p pwdigest[0][0]
-
-    if BCrypt::Password.new(pwdigest[0][0]) == password
-        db.execute("DELETE FROM partofig WHERE user_id = ?", id)
-        db.execute("DELETE FROM user WEHERE user_id = ?", id)
-        #db.execute("DELETE FROM user INNER JOIN partofig 
-        #ON partofig.user_id = user.user_id WHERE user.user_id = ?", id) inner jin funkar inte av någon annledning
+    if user_delete(password, id) == true
         redirect('/')
     else
-        session[:error] = "Fel lösenord"
-        redirect('/user/:id/edit')
+        redirect("/user/#{id}/edit")
     end
 end

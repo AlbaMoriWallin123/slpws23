@@ -1,0 +1,29 @@
+
+        
+h1 Vänner
+
+- p @parts
+- if @parts[0] != nil
+
+    #friends 
+        - @parts.each do |delar|
+        
+            .figurebox1
+                p.username = delar['username']
+
+                - i = 1
+
+                .figurebox2
+                    img.headgear src="/img/del#{delar['part1']}.png" alt=""/
+                    img.head src="/img/del#{delar['part2']}.png" alt=""/
+                    img.torso src="/img/del#{delar['part3']}.png" alt=""/
+                    img.legs src="/img/del#{delar['part4']}.png" alt=""/
+                    img.equipment src="/img/del#{delar['part5']}.png" alt=""/
+    
+- else 
+    - session[:error] = "Finns ingen här, få några vänner att registrera sig!"
+
+p.error_message #{session[:error]}
+
+- session[:error] = ""
+
