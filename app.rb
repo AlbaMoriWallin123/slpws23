@@ -5,6 +5,8 @@ require 'sqlite3'
 require 'bcrypt'
 require_relative './model.rb'
 
+include Model
+
 
 enable :sessions
 
@@ -49,23 +51,14 @@ end
 post('/login') do
     username = params[:username]
     password = params[:password]
+    time =[]
 
-    db = connect_to_db()
-    result = db.execute("SELECT * FROM user WHERE username = ?", username).first
-
-    if result == nil
-        session[:error] = "Fel lösenord eller användarnamn"
-        redirect('/')
-    end
-
-    pwdigest = result['pwdigest']
-    id = result['user_id']
-
-    if BCrypt::Password.new(pwdigest) == password #hur redirect till oilika med model
-        session[:id] = id
-        redirect("/figure/#{id}")
+    if login(username, password).class == Integer
+        session[:id] = login(username, password)
+        redirect("/figure/#{session[:id]}")
     else
-        session[:error] = "Fel lösenord eller användarnamn"
+        login(username, password).class == String
+        session[:error] = login(username, password)
         redirect('/')
     end
 end
@@ -123,6 +116,7 @@ post('/user/:id/delete') do
     if user_delete(password, id) == true
         redirect('/')
     else
-        redirect("/user/#{id}/edit")
+        session[:error] = user_delete(password, id)
+        redirect("/user/#{id}/edit") 
     end
 end

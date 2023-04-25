@@ -1,5 +1,5 @@
 
-
+module Model
 
 def connect_to_db()
 
@@ -106,18 +106,40 @@ def user_delete(password, id) #ta bort sitt eget konto
 
     db = SQLite3::Database.new('db/legofigure.db')
     pwdigest = db.execute("SELECT pwdigest FROM user WHERE user_id = ?", id)
-    p pwdigest
         
     if BCrypt::Password.new(pwdigest[0][0]) == password
         db.execute("DELETE FROM part_user_relation WHERE user_id = ?", id)
         db.execute("DELETE FROM user WHERE user_id = ?", id)
         return true
     else
-        session[:error] = "Fel lösenord"
-        return 
+        return "Fel lösenord"
+    end
+end
+
+def login(username, password)
+
+    #time << Time.now.to_i
+    db = connect_to_db()
+    result = db.execute("SELECT * FROM user WHERE username = ?", username).first
+
+    #if validate(time) == true
+    
+    if result == nil
+        return "Fel lösenord eller användarnamn"
     end
 
+    pwdigest = result['pwdigest']
+    id = result['user_id']
+
+    if BCrypt::Password.new(pwdigest) == password 
+        return id
+    else
+        return "Fel lösenord eller användarnamn"
+    end
 end
-#säkra up routes
 
+def validate(time)
 
+end
+
+end
